@@ -1,15 +1,15 @@
-enum OsmElementType {
+enum ElementType {
   node,
   way,
   relation,
   area;
 }
 
-class OsmElement {
-  final OsmElementType type;
+class Element {
+  final ElementType type;
   final Map<String, String> tags;
 
-  OsmElement({
+  Element({
     required this.type, 
     required this.tags
   });
@@ -24,7 +24,7 @@ class OsmElement {
   }
 }
 
-extension OsmElements on List<OsmElement> {
+extension Elements on List<Element> {
   String toSetString({String? set = '_'}) {
     String nodes = '';
     for (final element in this) {
