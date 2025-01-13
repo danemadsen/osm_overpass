@@ -6,10 +6,12 @@ enum ElementType {
 }
 
 class Element {
+  final String set;
   final ElementType type;
   final Map<String, String> tags;
 
   Element({
+    this.set = '_',
     required this.type, 
     required this.tags
   });
@@ -21,16 +23,5 @@ class Element {
       value += '[${entry.key}="${entry.value}"]';
     }
     return '$value;';
-  }
-}
-
-extension Elements on List<Element> {
-  String toSetString({String? set = '_'}) {
-    String nodes = '';
-    for (final element in this) {
-      nodes += element.toString();
-    }
-    
-    return '($nodes)->.$set;';
   }
 }
