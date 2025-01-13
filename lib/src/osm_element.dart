@@ -23,3 +23,14 @@ class OsmElement {
     return '$value;';
   }
 }
+
+extension OsmElements on List<OsmElement> {
+  String toSetString({String? set = '_'}) {
+    String nodes = '';
+    for (final element in this) {
+      nodes += element.toString();
+    }
+    
+    return '($nodes)->.$set;';
+  }
+}
