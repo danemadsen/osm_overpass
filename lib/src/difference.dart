@@ -10,7 +10,7 @@ class Difference extends Operation {
   }
 
   @override
-  String toOsmString() {
+  String toString() {
     return '(${a.toString()}; - ${b.toString()};)->.${a.set};';
   }
 }

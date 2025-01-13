@@ -7,7 +7,7 @@ class Union extends Operation {
   Union({required this.elements});
 
   @override
-  String toOsmString() {
+  String toString() {
     // Group elements by set
     Map<String, List<Element>> sets = {};
     for (final element in elements) {
