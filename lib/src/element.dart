@@ -1,3 +1,5 @@
+import 'clause.dart';
+
 enum ElementType {
   node,
   way,
@@ -8,19 +10,19 @@ enum ElementType {
 class Element {
   final String set;
   final ElementType type;
-  final Map<String, String> tags;
+  final List<Clause> clauses;
 
   Element({
     this.set = '_',
     required this.type, 
-    required this.tags
+    required this.clauses
   });
 
   @override
   String toString() {
     String value = type.name;
-    for (final entry in tags.entries) {
-      value += '[${entry.key}="${entry.value}"]';
+    for (final clause in clauses) {
+      value += clause.toString();
     }
     return '$value;';
   }
