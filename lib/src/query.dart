@@ -1,3 +1,4 @@
+import 'constants.dart';
 import 'filter.dart';
 
 abstract class QueryLanguage {
@@ -65,7 +66,7 @@ class Union extends QueryLanguage {
       osmString += element.toQuery();
     }
 
-    osmString += ')->.${set ?? '_'};';
+    osmString += ')->.${set ?? kDefaultSet};';
     
     return osmString;
   }
@@ -103,6 +104,6 @@ class Difference extends QueryLanguage {
 
   @override
   String toQuery({String? set}) {
-    return '(${a.toQuery()} - ${b.toQuery()})->.${set ?? '_'};';
+    return '(${a.toQuery()} - ${b.toQuery()})->.${set ?? kDefaultSet};';
   }
 }

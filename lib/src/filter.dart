@@ -1,5 +1,7 @@
 import 'package:latlong2/latlong.dart';
 
+import 'constants.dart';
+
 abstract class Filter {
   String toFilter();
 }
@@ -163,7 +165,7 @@ class RecurseFilter extends Filter {
   final String set;
   final String? role;
 
-  RecurseFilter({required this.type, this.set = '_', this.role});
+  RecurseFilter({required this.type, this.set = kDefaultSet, this.role});
 
   @override
   String toFilter() {
@@ -210,7 +212,7 @@ class AroundFilter extends Filter {
   final String set;
   final List<LatLng>? points;
 
-  AroundFilter({required this.radius, this.set = '_', this.points});
+  AroundFilter({required this.radius, this.set = kDefaultSet, this.points});
 
   @override
   String toFilter() {
@@ -287,7 +289,7 @@ class AreaFilter extends Filter {
   final String set;
   final int? id;
 
-  AreaFilter({this.id, this.set = '_'});
+  AreaFilter({this.id, this.set = kDefaultSet});
 
   @override
   String toFilter() {
@@ -302,7 +304,7 @@ class AreaFilter extends Filter {
 class PivotFilter extends Filter {
   final String set;
   
-  PivotFilter({this.set = '_'});
+  PivotFilter({this.set = kDefaultSet});
 
   @override
   String toFilter() {
