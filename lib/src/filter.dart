@@ -1,3 +1,5 @@
+import 'package:latlong2/latlong.dart';
+
 abstract class Filter {
   String toFilter();
 }
@@ -196,5 +198,22 @@ class IdFilter extends Filter {
     }
 
     return '(id:${ids.join(',')})';
+  }
+}
+
+class AroundFilter extends Filter {
+  final String set;
+  final double radius;
+  final List<LatLng>? points;
+
+  AroundFilter({required this.set, required this.radius, this.points});
+
+  @override
+  String toFilter() {
+    if (points != null) {
+      return 'around.$set:$radius,${points!.map((point) => '${point.latitude},${point.longitude}').join(',')}';
+    }
+
+    return 'around.$set:$radius';
   }
 }
