@@ -12,6 +12,10 @@ class KeyClause extends Clause {
   String toString() {
     return '["$key"]';
   }
+
+  NotKeyClause operator -() {
+    return NotKeyClause(key: key);
+  }
 }
 
 class NotKeyClause extends Clause {
@@ -20,6 +24,10 @@ class NotKeyClause extends Clause {
   @override
   String toString() {
     return '[!"$key"]';
+  }
+
+  KeyClause operator -() {
+    return KeyClause(key: key);
   }
 }
 
@@ -30,6 +38,10 @@ class KeyValueClause extends Clause {
   String toString() {
     return '["$key"="$value"]';
   }
+
+  NotKeyValueClause operator -() {
+    return NotKeyValueClause(key: key, value: value!);
+  }
 }
 
 class NotKeyValueClause extends Clause {
@@ -38,6 +50,10 @@ class NotKeyValueClause extends Clause {
   @override
   String toString() {
     return '["$key"!="$value"]';
+  }
+
+  KeyValueClause operator -() {
+    return KeyValueClause(key: key, value: value!);
   }
 }
 
@@ -48,6 +64,10 @@ class KeyRegexValueClause extends Clause {
   String toString() {
     return '["$key"~"$value"]';
   }
+
+  KeyNotRegexValueClause operator -() {
+    return KeyNotRegexValueClause(key: key, value: value!);
+  }
 }
 
 class KeyNotRegexValueClause extends Clause {
@@ -56,6 +76,10 @@ class KeyNotRegexValueClause extends Clause {
   @override
   String toString() {
     return '["$key"!~"$value"]';
+  }
+
+  KeyRegexValueClause operator -() {
+    return KeyRegexValueClause(key: key, value: value!);
   }
 }
 
