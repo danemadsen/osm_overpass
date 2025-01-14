@@ -282,3 +282,19 @@ class UserIdFilter extends Filter {
     return '(uid:${ids.join(',')})';
   }
 }
+
+class AreaFilter extends Filter {
+  final String set;
+  final int? id;
+
+  AreaFilter({this.id, this.set = '_'});
+
+  @override
+  String toFilter() {
+    if (id != null) {
+      return '(area.$set:$id)';
+    }
+
+    return '(area.$set)';
+  }
+}
