@@ -38,6 +38,10 @@ class KeyValueFilter extends Filter {
 
   KeyValueFilter({required this.key, required this.value});
 
+  factory KeyValueFilter.fromMapEntry(MapEntry<String, String> entry) {
+    return KeyValueFilter(key: entry.key, value: entry.value);
+  }
+
   @override
   String toFilter() {
     return '["$key"="$value"]';
@@ -53,6 +57,10 @@ class NotKeyValueFilter extends Filter {
   final String value;
 
   NotKeyValueFilter({required this.key, required this.value});
+
+  factory NotKeyValueFilter.fromMapEntry(MapEntry<String, String> entry) {
+    return NotKeyValueFilter(key: entry.key, value: entry.value);
+  }
 
   @override
   String toFilter() {
@@ -70,6 +78,10 @@ class KeyRegexValueFilter extends Filter {
 
   KeyRegexValueFilter({required this.key, required this.value});
 
+  factory KeyRegexValueFilter.fromMapEntry(MapEntry<String, String> entry) {
+    return KeyRegexValueFilter(key: entry.key, value: entry.value);
+  }
+
   @override
   String toFilter() {
     return '["$key"~"$value"]';
@@ -86,6 +98,10 @@ class KeyNotRegexValueFilter extends Filter {
 
   KeyNotRegexValueFilter({required this.key, required this.value});
 
+  factory KeyNotRegexValueFilter.fromMapEntry(MapEntry<String, String> entry) {
+    return KeyNotRegexValueFilter(key: entry.key, value: entry.value);
+  }
+
   @override
   String toFilter() {
     return '["$key"!~"$value"]';
@@ -101,6 +117,10 @@ class RegexKeyRegexValueFilter extends Filter {
   final String value;
 
   RegexKeyRegexValueFilter({required this.key, required this.value});
+
+  factory RegexKeyRegexValueFilter.fromMapEntry(MapEntry<String, String> entry) {
+    return RegexKeyRegexValueFilter(key: entry.key, value: entry.value);
+  }
 
   @override
   String toFilter() {
