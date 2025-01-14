@@ -1,4 +1,4 @@
-import 'clause.dart';
+import 'filter.dart';
 import 'operation.dart';
 import 'query_language.dart';
 
@@ -11,19 +11,19 @@ enum ElementType {
 
 class Element extends QueryLanguage {
   final ElementType type;
-  final List<Clause> clauses;
+  final List<Filter> filters;
 
   Element({
     required this.type, 
-    required this.clauses
+    required this.filters
   });
 
   @override
   String toQuery({String? set}) {
     String value = type.name;
 
-    for (final clause in clauses) {
-      value += clause.toString();
+    for (final filter in filters) {
+      value += filter.toFilter();
     }
 
     if (set != null) {
