@@ -127,6 +127,32 @@ class BboxFilter extends Filter {
   }
 }
 
+enum RecurseFilterTypes {
+  n,  // Forwards to nodes
+  w,  // Forwards to ways
+  r,  // Forwards to relations
+  bn, // Backwards to nodes
+  bw, // Backwards to ways
+  br  // Backwards to relations
+}
+
+class RecurseFilter extends Filter {
+  final RecurseFilterTypes type;
+  final String set;
+  final String? role;
+
+  RecurseFilter({required this.type, this.set = '_', this.role});
+
+  @override
+  String toFilter() {
+    if (role != null) {
+      return '(${type.name}.$set:$role)';
+    }
+
+    return '(${type.name}.$set)';
+  }
+}
+
 class SetFilter extends Filter {
   final String set;
 
