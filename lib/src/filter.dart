@@ -3,7 +3,7 @@ import 'package:latlong2/latlong.dart';
 import 'constants.dart';
 
 abstract class Filter {
-  String toFilter();
+  String toQueryLanguage();
 }
 
 class KeyFilter extends Filter {
@@ -12,7 +12,7 @@ class KeyFilter extends Filter {
   KeyFilter(this.key);
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '["$key"]';
   }
 
@@ -27,7 +27,7 @@ class NotKeyFilter extends Filter {
   NotKeyFilter(this.key);
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '[!"$key"]';
   }
 
@@ -47,7 +47,7 @@ class KeyValueFilter extends Filter {
   }
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '["$key"="$value"]';
   }
 
@@ -67,7 +67,7 @@ class NotKeyValueFilter extends Filter {
   }
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '["$key"!="$value"]';
   }
 
@@ -87,7 +87,7 @@ class KeyRegexValueFilter extends Filter {
   }
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '["$key"~"$value"]';
   }
 
@@ -107,7 +107,7 @@ class KeyNotRegexValueFilter extends Filter {
   }
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '["$key"!~"$value"]';
   }
 
@@ -127,7 +127,7 @@ class RegexKeyRegexValueFilter extends Filter {
   }
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '["~$key"~"$value"]';
   }
 }
@@ -146,7 +146,7 @@ class BboxFilter extends Filter {
   });
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '($south,$west,$north,$east)';
   }
 }
@@ -168,7 +168,7 @@ class RecurseFilter extends Filter {
   RecurseFilter({required this.type, this.set = kDefaultSet, this.role});
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     if (role != null) {
       return '(${type.name}.$set:$role)';
     }
@@ -185,7 +185,7 @@ class SetFilter extends Filter {
   SetFilter.single(String set) : sets = [set];
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '.${sets.join('.')}';
   }
 }
@@ -198,7 +198,7 @@ class IdFilter extends Filter {
   IdFilter.single(int id) : ids = [id];
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     if (ids.length == 1) {
       return '(${ids.first})';
     }
@@ -215,7 +215,7 @@ class AroundFilter extends Filter {
   AroundFilter({required this.radius, this.set = kDefaultSet, this.points});
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     if (points != null) {
       return '(around.$set:$radius,${points!.map((point) => '${point.latitude},${point.longitude}').join(',')})';
     }
@@ -230,7 +230,7 @@ class PolygonFilter extends Filter {
   PolygonFilter(this.points);
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '(poly:"${points.map((point) => '${point.latitude},${point.longitude}').join(' ')}")';
   }
 }
@@ -241,7 +241,7 @@ class NewerFilter extends Filter {
   NewerFilter(this.date);
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '(newer:"${date.toIso8601String()}")';
   }
 }
@@ -254,7 +254,7 @@ class ChangedFilter extends Filter {
   ChangedFilter.single(DateTime date) : dates = [date];
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '(changed:"${dates.map((date) => date.toIso8601String()).join('","')}")';
   }
 }
@@ -267,7 +267,7 @@ class UserFilter extends Filter {
   UserFilter.single(String user) : users = [user];
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '(user:"${users.join('","')}")';
   }
 }
@@ -280,7 +280,7 @@ class UserIdFilter extends Filter {
   UserIdFilter.single(int id) : ids = [id];
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '(uid:${ids.join(',')})';
   }
 }
@@ -292,7 +292,7 @@ class AreaFilter extends Filter {
   AreaFilter({this.id, this.set = kDefaultSet});
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     if (id != null) {
       return '(area.$set:$id)';
     }
@@ -307,7 +307,7 @@ class PivotFilter extends Filter {
   PivotFilter({this.set = kDefaultSet});
 
   @override
-  String toFilter() {
+  String toQueryLanguage() {
     return '(pivot.$set)';
   }
 }

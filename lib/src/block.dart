@@ -1,8 +1,8 @@
 import 'constants.dart';
 import 'filter.dart';
 
-abstract class QueryLanguage {
-  String toQuery({ String? set });
+abstract class Block {
+  String toQueryLanguage({ String? set });
 }
 
 enum ElementType {
@@ -12,7 +12,7 @@ enum ElementType {
   area;
 }
 
-class Element extends QueryLanguage {
+class Element extends Block {
   final ElementType type;
   final List<Filter> filters;
 
@@ -22,11 +22,11 @@ class Element extends QueryLanguage {
   });
 
   @override
-  String toQuery({String? set}) {
+  String toQueryLanguage({String? set}) {
     String value = type.name;
 
     for (final filter in filters) {
-      value += filter.toFilter();
+      value += filter.toQueryLanguage();
     }
 
     if (set != null) {
@@ -53,17 +53,17 @@ class Element extends QueryLanguage {
   }
 }
 
-class Union extends QueryLanguage {
+class Union extends Block {
   final List<Element> elements;
 
   Union(this.elements);
 
   @override
-  String toQuery({String? set}) {
+  String toQueryLanguage({String? set}) {
     String osmString = '(';
 
     for (final element in elements) {
-      osmString += element.toQuery();
+      osmString += element.toQueryLanguage();
     }
 
     osmString += ')->.${set ?? kDefaultSet};';
@@ -96,14 +96,14 @@ class Union extends QueryLanguage {
   }
 }
 
-class Difference extends QueryLanguage {
+class Difference extends Block {
   final Element a;
   final Element b;
 
   Difference(this.a, this.b);
 
   @override
-  String toQuery({String? set}) {
-    return '(${a.toQuery()} - ${b.toQuery()})->.${set ?? kDefaultSet};';
+  String toQueryLanguage({String? set}) {
+    return '(${a.toQueryLanguage()} - ${b.toQueryLanguage()})->.${set ?? kDefaultSet};';
   }
 }
