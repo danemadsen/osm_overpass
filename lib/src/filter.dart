@@ -298,3 +298,14 @@ class AreaFilter extends Filter {
     return '(area.$set)';
   }
 }
+
+class PivotFilter extends Filter {
+  final String set;
+  
+  PivotFilter({this.set = '_'});
+
+  @override
+  String toFilter() {
+    return '(pivot.$set)';
+  }
+}
