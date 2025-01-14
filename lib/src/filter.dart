@@ -217,3 +217,14 @@ class AroundFilter extends Filter {
     return '(around.$set:$radius)';
   }
 }
+
+class PolygonFilter extends Filter {
+  final List<LatLng> points;
+
+  PolygonFilter(this.points);
+
+  @override
+  String toFilter() {
+    return '(poly:"${points.map((point) => '${point.latitude},${point.longitude}').join(' ')}")';
+  }
+}
