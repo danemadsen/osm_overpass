@@ -228,3 +228,25 @@ class PolygonFilter extends Filter {
     return '(poly:"${points.map((point) => '${point.latitude},${point.longitude}').join(' ')}")';
   }
 }
+
+class NewerFilter extends Filter {
+  final DateTime date;
+
+  NewerFilter(this.date);
+
+  @override
+  String toFilter() {
+    return '(newer:"${date.toIso8601String()}")';
+  }
+}
+
+class ChangedFilter extends Filter {
+  final List<DateTime> dates;
+
+  ChangedFilter(this.dates);
+
+  @override
+  String toFilter() {
+    return '(changed:"${dates.map((date) => date.toIso8601String()).join('","')}")';
+  }
+}
