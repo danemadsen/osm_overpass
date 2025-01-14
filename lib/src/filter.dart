@@ -154,20 +154,9 @@ class RecurseFilter extends Filter {
 }
 
 class SetFilter extends Filter {
-  final String set;
-
-  SetFilter(this.set);
-
-  @override
-  String toFilter() {
-    return '.$set';
-  }
-}
-
-class SetIntersectionFilter extends Filter {
   final List<String> sets;
 
-  SetIntersectionFilter(this.sets);
+  SetFilter(this.sets);
 
   @override
   String toFilter() {
@@ -176,23 +165,16 @@ class SetIntersectionFilter extends Filter {
 }
 
 class IdFilter extends Filter {
-  final int id;
-
-  IdFilter(this.id);
-
-  @override
-  String toFilter() {
-    return '($id)';
-  }
-}
-
-class MultipleIdFilter extends Filter {
   final List<int> ids;
 
-  MultipleIdFilter(this.ids);
+  IdFilter(this.ids);
 
   @override
   String toFilter() {
+    if (ids.length == 1) {
+      return '(${ids.first})';
+    }
+
     return '(id:${ids.join(',')})';
   }
 }
