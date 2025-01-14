@@ -1,4 +1,6 @@
-abstract class Clause {
+import 'filter.dart';
+
+abstract class Clause extends Filter {
   final String key;
   final String? value;
 
@@ -9,7 +11,7 @@ class KeyClause extends Clause {
   KeyClause({required super.key});
 
   @override
-  String toString() {
+  String toFilter() {
     return '["$key"]';
   }
 
@@ -22,7 +24,7 @@ class NotKeyClause extends Clause {
   NotKeyClause({required super.key});
 
   @override
-  String toString() {
+  String toFilter() {
     return '[!"$key"]';
   }
 
@@ -35,7 +37,7 @@ class KeyValueClause extends Clause {
   KeyValueClause({required super.key, required String super.value});
 
   @override
-  String toString() {
+  String toFilter() {
     return '["$key"="$value"]';
   }
 
@@ -48,7 +50,7 @@ class NotKeyValueClause extends Clause {
   NotKeyValueClause({required super.key, required String super.value});
 
   @override
-  String toString() {
+  String toFilter() {
     return '["$key"!="$value"]';
   }
 
@@ -61,7 +63,7 @@ class KeyRegexValueClause extends Clause {
   KeyRegexValueClause({required super.key, required String super.value});
 
   @override
-  String toString() {
+  String toFilter() {
     return '["$key"~"$value"]';
   }
 
@@ -74,7 +76,7 @@ class KeyNotRegexValueClause extends Clause {
   KeyNotRegexValueClause({required super.key, required String super.value});
 
   @override
-  String toString() {
+  String toFilter() {
     return '["$key"!~"$value"]';
   }
 
@@ -87,7 +89,7 @@ class RegexKeyRegexValueClause extends Clause {
   RegexKeyRegexValueClause({required super.key, required String super.value});
 
   @override
-  String toString() {
+  String toFilter() {
     return '["~$key"~"$value"]';
   }
 }
