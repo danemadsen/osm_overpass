@@ -107,3 +107,22 @@ class RegexKeyRegexValueFilter extends Filter {
     return '["~$key"~"$value"]';
   }
 }
+
+class BboxFilter extends Filter {
+  final double south;
+  final double west;
+  final double north;
+  final double east;
+
+  BboxFilter({
+    required this.south, 
+    required this.west, 
+    required this.north, 
+    required this.east
+  });
+
+  @override
+  String toFilter() {
+    return '($south,$west,$north,$east)';
+  }
+}
