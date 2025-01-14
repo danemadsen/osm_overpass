@@ -126,3 +126,25 @@ class BboxFilter extends Filter {
     return '($south,$west,$north,$east)';
   }
 }
+
+class SetFilter extends Filter {
+  final String set;
+
+  SetFilter(this.set);
+
+  @override
+  String toFilter() {
+    return '.$set';
+  }
+}
+
+class SetIntersectionFilter extends Filter {
+  final List<String> sets;
+
+  SetIntersectionFilter(this.sets);
+
+  @override
+  String toFilter() {
+    return '.${sets.join('.')}';
+  }
+}
