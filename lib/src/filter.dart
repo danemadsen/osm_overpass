@@ -211,9 +211,9 @@ class AroundFilter extends Filter {
   @override
   String toFilter() {
     if (points != null) {
-      return 'around.$set:$radius,${points!.map((point) => '${point.latitude},${point.longitude}').join(',')}';
+      return '(around.$set:$radius,${points!.map((point) => '${point.latitude},${point.longitude}').join(',')})';
     }
 
-    return 'around.$set:$radius';
+    return '(around.$set:$radius)';
   }
 }
