@@ -180,6 +180,8 @@ class SetFilter extends Filter {
 
   SetFilter(this.sets);
 
+  SetFilter.single(String set) : sets = [set];
+
   @override
   String toFilter() {
     return '.${sets.join('.')}';
@@ -190,6 +192,8 @@ class IdFilter extends Filter {
   final List<int> ids;
 
   IdFilter(this.ids);
+
+  IdFilter.single(int id) : ids = [id];
 
   @override
   String toFilter() {
@@ -245,8 +249,36 @@ class ChangedFilter extends Filter {
 
   ChangedFilter(this.dates);
 
+  ChangedFilter.single(DateTime date) : dates = [date];
+
   @override
   String toFilter() {
     return '(changed:"${dates.map((date) => date.toIso8601String()).join('","')}")';
+  }
+}
+
+class UserFilter extends Filter {
+  final List<String> users;
+
+  UserFilter(this.users);
+
+  UserFilter.single(String user) : users = [user];
+
+  @override
+  String toFilter() {
+    return '(user:"${users.join('","')}")';
+  }
+}
+
+class UserIdFilter extends Filter {
+  final List<int> ids;
+
+  UserIdFilter(this.ids);
+
+  UserIdFilter.single(int id) : ids = [id];
+
+  @override
+  String toFilter() {
+    return '(uid:${ids.join(',')})';
   }
 }
