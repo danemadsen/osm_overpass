@@ -1,45 +1,23 @@
 import 'element.dart';
+import 'query_language.dart';
 
-enum OperationType {
-  union,
-  difference;
-}
-
-abstract class Operation {
-  OperationType get type;
-}
-
-class Union extends Operation {
+class Union extends QueryLanguage {
   final List<Element> elements;
 
   Union(this.elements);
 
   @override
-  String toString() {
-    // Group elements by set
-    Map<String, List<Element>> sets = {};
+  String toQuery({String? set}) {
+    String osmString = '(';
+
     for (final element in elements) {
-      if (!sets.containsKey(element.set)) {
-        sets[element.set] = [];
-      }
-      sets[element.set]!.add(element);
+      osmString += element.toQuery();
     }
 
-    // Generate OSM string
-    String osmString = '';
-    for (final set in sets.entries) {
-      osmString += '(';
-      for (final element in set.value) {
-        osmString += element.toString();
-      }
-      osmString += ')->.${set.key};';
-    }
+    osmString += ')->.${set ?? '_'};';
     
     return osmString;
   }
-
-  @override
-  OperationType get type => OperationType.union;
 
   Union operator +(dynamic other) {
     if (other is Element) {
@@ -66,19 +44,14 @@ class Union extends Operation {
   }
 }
 
-class Difference extends Operation {
+class Difference extends QueryLanguage {
   final Element a;
   final Element b;
 
-  Difference(this.a, this.b) {
-    if (a.set != b.set) throw ArgumentError('Elements must be in the same set');
-  }
+  Difference(this.a, this.b);
 
   @override
-  String toString() {
-    return '(${a.toString()}; - ${b.toString()};)->.${a.set};';
+  String toQuery({String? set}) {
+    return '(${a.toQuery()} - ${b.toQuery()})->.${set ?? '_'};';
   }
-
-  @override
-  OperationType get type => OperationType.difference;
 }

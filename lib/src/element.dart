@@ -1,5 +1,6 @@
 import 'clause.dart';
 import 'operation.dart';
+import 'query_language.dart';
 
 enum ElementType {
   node,
@@ -8,23 +9,27 @@ enum ElementType {
   area;
 }
 
-class Element {
-  final String set;
+class Element extends QueryLanguage {
   final ElementType type;
   final List<Clause> clauses;
 
   Element({
-    this.set = '_',
     required this.type, 
     required this.clauses
   });
 
   @override
-  String toString() {
+  String toQuery({String? set}) {
     String value = type.name;
+
     for (final clause in clauses) {
       value += clause.toString();
     }
+
+    if (set != null) {
+      value += '->.$set';
+    }
+
     return '$value;';
   }
 
