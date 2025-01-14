@@ -202,11 +202,11 @@ class IdFilter extends Filter {
 }
 
 class AroundFilter extends Filter {
-  final String set;
   final double radius;
+  final String set;
   final List<LatLng>? points;
 
-  AroundFilter({required this.set, required this.radius, this.points});
+  AroundFilter({required this.radius, this.set = '_', this.points});
 
   @override
   String toFilter() {
