@@ -174,3 +174,25 @@ class SetIntersectionFilter extends Filter {
     return '.${sets.join('.')}';
   }
 }
+
+class IdFilter extends Filter {
+  final int id;
+
+  IdFilter(this.id);
+
+  @override
+  String toFilter() {
+    return '($id)';
+  }
+}
+
+class MultipleIdFilter extends Filter {
+  final List<int> ids;
+
+  MultipleIdFilter(this.ids);
+
+  @override
+  String toFilter() {
+    return '(id:${ids.join(',')})';
+  }
+}
