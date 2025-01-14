@@ -52,6 +52,18 @@ class Union extends Operation {
       throw ArgumentError('Invalid type for operator +');
     }
   }
+
+  Union operator -(dynamic other) {
+    if (other is Element) {
+      return Union(elements.where((element) => element != other).toList());
+    } 
+    else if (other is Union) {
+      return Union(elements.where((element) => !other.elements.contains(element)).toList());
+    } 
+    else {
+      throw ArgumentError('Invalid type for operator -');
+    }
+  }
 }
 
 class Difference extends Operation {
