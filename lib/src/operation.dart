@@ -12,7 +12,7 @@ abstract class Operation {
 class Union extends Operation {
   final List<Element> elements;
 
-  Union({required this.elements});
+  Union(this.elements);
 
   @override
   String toString() {
@@ -40,13 +40,25 @@ class Union extends Operation {
 
   @override
   OperationType get type => OperationType.union;
+
+  Union operator +(dynamic other) {
+    if (other is Element) {
+      return Union([...elements, other]);
+    } 
+    else if (other is Union) {
+      return Union([...elements, ...other.elements]);
+    } 
+    else {
+      throw ArgumentError('Invalid type for operator +');
+    }
+  }
 }
 
 class Difference extends Operation {
   final Element a;
   final Element b;
 
-  Difference({required this.a, required this.b}) {
+  Difference(this.a, this.b) {
     if (a.set != b.set) throw ArgumentError('Elements must be in the same set');
   }
 
