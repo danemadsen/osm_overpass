@@ -2,7 +2,7 @@ import 'package:latlong2/latlong.dart';
 
 class Element {
   final int? id;
-  final Map<String, String>? tags;
+  final Map<String, dynamic>? tags;
 
   Element({this.id, this.tags});
 

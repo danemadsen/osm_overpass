@@ -33,7 +33,7 @@ class Overpass {
       query = query.replaceAll(outRegex, '[out:json]');
     }
     else {
-      query = '[out:json]/n$query';
+      query = '[out:json];\n$query';
     }
 
     return query;
@@ -85,9 +85,21 @@ class Overpass {
     String query = scriptText ?? await scriptFile!.readAsString();
     query = _buildQuery(query, bbox, center);
 
+    final Map<String, String> queryMap = {
+      'data': query,
+    };
+
+    final String data = queryMap.entries.map((e) => '${e.key}=${Uri.encodeComponent(e.value)}').join('&');
+
     final Response<Map<String, dynamic>> response = await _dioClient.post<Map<String, dynamic>>(
       'https://overpass-api.de/api/interpreter',
-      data: query,
+      data: data,
+      options: Options(
+        contentType: Headers.formUrlEncodedContentType,
+        headers: {
+          'charset': 'UTF-8',
+        },
+      )
     );
 
     final List<dynamic>? elements = response.data?['elements'];
