@@ -34,6 +34,15 @@ class Element {
 
     return data;
   }
+
+  static List<Element> fromList(List<dynamic> list) {
+    final List<Element> elements = [];
+    for (final element in list) {
+      elements.add(Element.fromMap(element));
+    }
+
+    return elements;
+  }
 }
 
 class Node extends Element {
