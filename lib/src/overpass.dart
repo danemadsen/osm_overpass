@@ -14,9 +14,7 @@ class Overpass {
     Dio? dioClient
   }) : _dioClient = dioClient ?? Dio();
 
-  String _buildQuery(File script, Bbox? bbox, LatLng? center) {
-    String query = script.readAsStringSync();
-
+  String _buildQuery(String query, Bbox? bbox, LatLng? center) {
     if (bbox != null) {
       query = query.replaceAll('{{bbox}}', '${bbox.$1},${bbox.$2},${bbox.$3},${bbox.$4}');
     } 
@@ -81,8 +79,11 @@ class Overpass {
     return date.toIso8601String();
   }
 
-  Future<List<Element>?> query({required File script, Bbox? bbox, LatLng? center}) async {
-    final String query = _buildQuery(script, bbox, center);
+  Future<List<Element>?> query({String? scriptText, File? scriptFile, Bbox? bbox, LatLng? center}) async {
+    assert(scriptText != null || scriptFile != null);
+
+    String query = scriptText ?? await scriptFile!.readAsString();
+    query = _buildQuery(query, bbox, center);
 
     final Response<Map<String, dynamic>> response = await _dioClient.post<Map<String, dynamic>>(
       'https://overpass-api.de/api/interpreter',
