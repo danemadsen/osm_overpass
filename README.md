@@ -1,6 +1,6 @@
 # osm_overpass
 
-A Dart package for querying the OpenStreetMap Overpass API.
+A dio compatible dart package to query the OpenStreetMap Overpass API. 
 
 ## Getting started
 
@@ -19,9 +19,7 @@ import 'package:osm_overpass/osm_overpass.dart';
 
 ## Usage
 
-To query the OpenStreetMap Overpass API you can use the `Overpass` class. The `query` method takes a `scriptText` parameter which is the Overpass QL script to run and a `bbox` parameter which is the bounding box to query within. The `query` method returns a list of `Element` objects which represent the results of the query.
-
-Alternatively a `File` object can be passed to the `query` method to read the Overpass QL script from a file.
+To query the OpenStreetMap Overpass API you can use the `Overpass` class. The `query` method takes a `script` parameter which is the Overpass QL script to run and a `bbox` parameter which is the bounding box to query within. The `query` method returns a list of `Element` objects which represent the results of the query.
 
 ```dart
 import 'package:osm_overpass/osm_overpass.dart';
@@ -29,7 +27,7 @@ import 'package:osm_overpass/osm_overpass.dart';
 void main() async {
   final overpass = Overpass();
   final elements = await overpass.query(
-    scriptText: 'node[amenity=bar]({{bbox}});\nout;', 
+    script: 'node[amenity=bar]({{bbox}});\nout;', 
     bbox: (-27.460467537569297,153.03190097931952,-27.454260316536676,153.03804860238165)
   );
   

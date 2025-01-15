@@ -7,14 +7,17 @@ extension QueryBuilder on String {
     String query = this;
 
     if (bbox != null) {
-      query = query.replaceAll('{{bbox}}', '${bbox.$1},${bbox.$2},${bbox.$3},${bbox.$4}');
-    } 
-    
-    if (center != null) {
-      query = query.replaceAll('{{center}}', '${center.latitude},${center.longitude}');
+      query = query.replaceAll(
+          '{{bbox}}', '${bbox.$1},${bbox.$2},${bbox.$3},${bbox.$4}');
     }
 
-    final dateRegex = RegExp(r'\{\{date:\s*(-?\d+)\s*(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\}\}');
+    if (center != null) {
+      query = query.replaceAll(
+          '{{center}}', '${center.latitude},${center.longitude}');
+    }
+
+    final dateRegex = RegExp(
+        r'\{\{date:\s*(-?\d+)\s*(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\}\}');
     if (dateRegex.hasMatch(query)) {
       query = query.replaceAllMapped(dateRegex, _replaceDateMatch);
     }
@@ -22,8 +25,7 @@ extension QueryBuilder on String {
     final outRegex = RegExp(r'\[out:(xml|json|csv|custom|popup)\]');
     if (outRegex.hasMatch(query)) {
       query = query.replaceAll(outRegex, '[out:json]');
-    }
-    else {
+    } else {
       query = '[out:json];\n$query';
     }
 
@@ -58,11 +60,13 @@ extension QueryBuilder on String {
         break;
       case 'month':
       case 'months':
-        date = DateTime(now.year, now.month - amount, now.day, now.hour, now.minute, now.second);
+        date = DateTime(now.year, now.month - amount, now.day, now.hour,
+            now.minute, now.second);
         break;
       case 'year':
       case 'years':
-        date = DateTime(now.year - amount, now.month, now.day, now.hour, now.minute, now.second);
+        date = DateTime(now.year - amount, now.month, now.day, now.hour,
+            now.minute, now.second);
         break;
       default:
         throw Exception('Invalid unit: $unit');

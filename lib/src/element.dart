@@ -1,19 +1,19 @@
 import 'package:latlong2/latlong.dart';
 
 /// Represents an OSM (OpenStreetMap) element which can be a node, way, relation, or area.
-/// 
+///
 /// The [Element] class is a base class that holds common properties and methods for all types of OSM elements.
-/// 
+///
 /// Properties:
 /// - `id`: The unique identifier of the element. It can be null.
 /// - `tags`: A map of tags associated with the element. It can be null.
-/// 
+///
 /// Constructors:
 /// - `Element({this.id, this.tags})`: Creates an instance of [Element] with optional `id` and `tags`.
-/// 
+///
 /// Factory Constructors:
 /// - `factory Element.fromMap(Map<String, dynamic> map)`: Creates an instance of a specific element type (Node, Way, Relation, Area) based on the 'type' field in the provided map.
-/// 
+///
 /// Methods:
 /// - `Map<String, dynamic> toMap()`: Converts the [Element] instance to a map.
 /// - `static List<Element> fromList(List<dynamic> list)`: Converts a list of maps to a list of [Element] instances.
@@ -23,7 +23,7 @@ class Element {
   final int? id;
 
   /// A map containing the tags associated with the element.
-  /// 
+  ///
   /// The keys are the tag names and the values are the tag values.
   /// This can be `null` if the element has no tags.
   final Map<String, dynamic>? tags;
@@ -71,7 +71,7 @@ class Element {
   ///   A map representation of the current object.
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = {};
-    
+
     if (id != null) {
       data['id'] = id;
     }
@@ -102,24 +102,24 @@ class Element {
 }
 
 /// A class representing a Node element in the OpenStreetMap (OSM) data model.
-/// 
+///
 /// A Node is a specific type of Element that has a geographical position defined
 /// by latitude and longitude coordinates.
-/// 
+///
 /// The [Node] class extends the [Element] class and adds a [LatLng] property to
 /// store the geographical coordinates.
-/// 
+///
 /// The [Node] class provides a factory constructor [Node.fromMap] to create an
 /// instance from a map, and an overridden [toMap] method to convert an instance
 /// back to a map.
-/// 
+///
 /// Properties:
 /// - [latLng]: The geographical coordinates of the node, represented as a [LatLng] object.
-/// 
+///
 /// Constructors:
 /// - [Node]: Creates a new instance of [Node] with the given id, tags, and optional latLng.
 /// - [Node.fromMap]: Creates a new instance of [Node] from a map containing the node's data.
-/// 
+///
 /// Methods:
 /// - [toMap]: Converts the [Node] instance to a map, including the geographical coordinates if available.
 class Node extends Element {
@@ -131,7 +131,7 @@ class Node extends Element {
   ///
   /// The [id] and [tags] parameters are inherited from the superclass.
   /// The [latLng] parameter represents the latitude and longitude of the node.
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// var node = Node(id: 123, tags: {'name': 'example'}, latLng: LatLng(12.34, 56.78));
@@ -155,11 +155,7 @@ class Node extends Element {
     final lon = map['lon'];
     final latLng = lat != null && lon != null ? LatLng(lat, lon) : null;
 
-    return Node(
-      id: map['id'],
-      tags: map['tags'],
-      latLng: latLng
-    );
+    return Node(id: map['id'], tags: map['tags'], latLng: latLng);
   }
 
   /// Converts the current object to a map representation.
@@ -173,7 +169,7 @@ class Node extends Element {
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = super.toMap();
-    
+
     data['type'] = 'node';
 
     if (latLng != null) {
@@ -186,39 +182,39 @@ class Node extends Element {
 }
 
 /// A class representing a Way element in OpenStreetMap.
-/// 
+///
 /// A Way is an ordered list of nodes which normally also has at least one tag
 /// or is included within a Relation. It is used to represent linear features
 /// and area boundaries.
-/// 
+///
 /// Extends the [Element] class.
-/// 
+///
 /// Properties:
 /// - `nodes`: A list of node IDs that make up the way. Can be null.
-/// 
+///
 /// Constructors:
 /// - `Way({super.id, super.tags, this.nodes})`: Creates a Way instance with
 ///   the given id, tags, and nodes.
-/// 
+///
 /// Factory Constructors:
 /// - `Way.fromMap(Map<String, dynamic> map)`: Creates a Way instance from a
 ///   map. The map should contain the keys 'id', 'tags', and 'nodes'.
-/// 
+///
 /// Methods:
 /// - `@override Map<String, dynamic> toMap()`: Converts the Way instance to a
 ///   map. Adds the type 'way' and includes the nodes if they are not null.
 class Way extends Element {
   /// A list of node IDs associated with this element.
-  /// 
+  ///
   /// This list contains the IDs of the nodes that make up the element.
   /// It can be `null` if there are no nodes associated with the element.
   final List<int>? nodes;
 
   /// Creates a new instance of the `Way` class.
-  /// 
+  ///
   /// The `id` and `tags` parameters are inherited from the superclass.
   /// The `nodes` parameter is a list of node IDs that make up the way.
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// var way = Way(id: 123, tags: {'highway': 'residential'}, nodes: [1, 2, 3]);
@@ -234,26 +230,22 @@ class Way extends Element {
   ///
   /// Returns a `Way` object initialized with the values from the map.
   factory Way.fromMap(Map<String, dynamic> map) {
-    return Way(
-      id: map['id'],
-      tags: map['tags'],
-      nodes: map['nodes']
-    );
+    return Way(id: map['id'], tags: map['tags'], nodes: map['nodes']);
   }
 
   /// Converts the current object to a map representation.
-  /// 
+  ///
   /// This method overrides the `toMap` method from the superclass and adds
   /// additional data specific to this class. It includes the type of the
   /// element as 'way' and, if available, the list of nodes.
-  /// 
+  ///
   /// Returns a `Map<String, dynamic>` containing the data of the current object.
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = super.toMap();
 
     data['type'] = 'way';
-    
+
     if (nodes != null) {
       data['nodes'] = nodes;
     }
@@ -263,43 +255,43 @@ class Way extends Element {
 }
 
 /// A class representing a Relation element in OSM (OpenStreetMap).
-/// 
+///
 /// A Relation is a collection of one or more members, which can be nodes,
 /// ways, or other relations. Each member has a role within the relation.
-/// 
+///
 /// This class extends the [Element] class and includes additional properties
 /// specific to relations.
-/// 
+///
 /// Properties:
 /// - `members`: A list of [Member] objects that are part of this relation.
-/// 
+///
 /// Constructors:
 /// - `Relation({super.id, super.tags, this.members})`: Creates a new Relation
 ///   instance with the given id, tags, and members.
 /// - `factory Relation.fromMap(Map<String, dynamic> map)`: Creates a new
 ///   Relation instance from a map. The map should contain the keys 'id',
 ///   'tags', and 'members'.
-/// 
+///
 /// Methods:
 /// - `@override Map<String, dynamic> toMap()`: Converts the Relation instance
 ///   to a map. The map will include the type 'relation' and the members if
 ///   they are not null.
 class Relation extends Element {
   /// A list of members associated with this element.
-  /// 
+  ///
   /// This list can be null if there are no members.
-  /// 
+  ///
   /// Each member in the list is an instance of the `Member` class.
   final List<Member>? members;
 
   /// A class representing a relation element in OpenStreetMap.
-  /// 
+  ///
   /// A relation is a multi-purpose data structure that documents a relationship
   /// between two or more data elements (nodes, ways, and/or other relations).
-  /// 
+  ///
   /// The [Relation] class extends a base class that includes an identifier and
   /// tags, and adds a list of members that are part of the relation.
-  /// 
+  ///
   /// - `id`: The unique identifier for the relation.
   /// - `tags`: A map of key-value pairs associated with the relation.
   /// - `members`: A list of members that are part of the relation.
@@ -319,26 +311,22 @@ class Relation extends Element {
       }
     }
 
-    return Relation(
-      id: map['id'],
-      tags: map['tags'],
-      members: members
-    );
+    return Relation(id: map['id'], tags: map['tags'], members: members);
   }
 
   /// Converts the current object to a map representation.
-  /// 
+  ///
   /// This method overrides the `toMap` method from the superclass and adds
   /// additional data specific to this class. It includes the type of the
   /// element as 'relation' and, if available, the list of members.
-  /// 
+  ///
   /// Returns a `Map<String, dynamic>` containing the data of the current object.
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = super.toMap();
 
     data['type'] = 'relation';
-    
+
     if (members != null) {
       data['members'] = members;
     }
@@ -394,18 +382,15 @@ class Area extends Element {
   /// - Parameter map: A map containing the data to create an `Area` instance.
   /// - Returns: An `Area` instance created from the provided map.
   factory Area.fromMap(Map<String, dynamic> map) {
-    return Area(
-      id: map['id'],
-      tags: map['tags']
-    );
+    return Area(id: map['id'], tags: map['tags']);
   }
 
   /// Converts the current object to a map representation.
-  /// 
+  ///
   /// This method overrides the `toMap` method from the superclass and adds
   /// additional data specific to this class. It includes the type of the
   /// element as 'area'.
-  /// 
+  ///
   /// Returns a `Map<String, dynamic>` containing the data of the current object.
   @override
   Map<String, dynamic> toMap() {
@@ -472,20 +457,16 @@ class Member {
   ///
   /// Returns a `Member` instance with the values from the map.
   factory Member.fromMap(Map<String, dynamic> map) {
-    return Member(
-      type: map['type'],
-      ref: map['ref'],
-      role: map['role']
-    );
+    return Member(type: map['type'], ref: map['ref'], role: map['role']);
   }
 
   /// Converts the current object to a map representation.
-  /// 
+  ///
   /// Returns a `Map<String, dynamic>` containing the data of the current object.
   /// The map will include the `type`, `ref`, and `role` fields if they are not null.
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = {};
-    
+
     if (type != null) {
       data['type'] = type;
     }
