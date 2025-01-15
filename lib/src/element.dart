@@ -66,6 +66,8 @@ class Node extends Element {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = super.toMap();
     
+    data['type'] = 'node';
+
     if (latLng != null) {
       data['lat'] = latLng!.latitude;
       data['lon'] = latLng!.longitude;
@@ -91,6 +93,8 @@ class Way extends Element {
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = super.toMap();
+
+    data['type'] = 'way';
     
     if (nodes != null) {
       data['nodes'] = nodes;
@@ -123,6 +127,8 @@ class Relation extends Element {
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = super.toMap();
+
+    data['type'] = 'relation';
     
     if (members != null) {
       data['members'] = members;
@@ -140,6 +146,15 @@ class Area extends Element {
       id: map['id'],
       tags: map['tags']
     );
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    final Map<String, dynamic> data = super.toMap();
+
+    data['type'] = 'area';
+
+    return data;
   }
 }
 
