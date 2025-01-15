@@ -47,6 +47,21 @@ abstract class Evaluator {
   }
 }
 
+class DynamicEvaluator extends Evaluator {
+  final dynamic value;
+
+  DynamicEvaluator(this.value) {
+    if (!_validEvaluator(value)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return _getEvaluatorString(value);
+  }
+}
+
 class NotEvaluator extends Evaluator {
   final dynamic evaluator;
 
@@ -94,5 +109,20 @@ class AndEvaluator extends Evaluator {
   @override
   String toQueryLanguage() {
     return '${_getEvaluatorString(left)} && ${_getEvaluatorString(right)}';
+  }
+}
+
+class ParenthesesEvaluator extends Evaluator {
+  final dynamic evaluator;
+
+  ParenthesesEvaluator(this.evaluator) {
+    if (!_validEvaluator(evaluator)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '(${_getEvaluatorString(evaluator)})';
   }
 }
