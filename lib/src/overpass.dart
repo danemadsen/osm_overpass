@@ -23,9 +23,17 @@ class Overpass {
       query = query.replaceAll('{{center}}', '${center.latitude},${center.longitude}');
     }
 
-    final regex = RegExp(r'\{\{date:\s*(-?\d+)\s*(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\}\}');
-    if (regex.hasMatch(query)) {
-      query = query.replaceAllMapped(regex, _replaceDateMatch);
+    final dateRegex = RegExp(r'\{\{date:\s*(-?\d+)\s*(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\}\}');
+    if (dateRegex.hasMatch(query)) {
+      query = query.replaceAllMapped(dateRegex, _replaceDateMatch);
+    }
+
+    final outRegex = RegExp(r'\[out:(xml|json|csv|custom|popup)\]');
+    if (outRegex.hasMatch(query)) {
+      query = query.replaceAll(outRegex, '[out:json]');
+    }
+    else {
+      query = '[out:json]/n$query';
     }
 
     return query;
