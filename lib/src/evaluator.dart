@@ -94,6 +94,24 @@ class DynamicEvaluator extends Evaluator {
   }
 }
 
+class IdEvaluator extends Evaluator {
+  IdEvaluator();
+
+  @override
+  String toQueryLanguage() {
+    return 'id()';
+  }
+}
+
+class TypeEvaluator extends Evaluator {
+  TypeEvaluator();
+
+  @override
+  String toQueryLanguage() {
+    return 'type()';
+  }
+}
+
 class NotEvaluator extends Evaluator {
   final dynamic evaluator;
 
