@@ -1,39 +1,40 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# osm_overpass
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+A Dart package for querying the OpenStreetMap Overpass API.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+To get started add the following to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  osm_overpass: ^0.0.1
+```
+
+Then you can import the package in your Dart code:
+
+```dart
+import 'package:osm_overpass/osm_overpass.dart';
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+To query the OpenStreetMap Overpass API you can use the `Overpass` class. The `query` method takes a `scriptText` parameter which is the Overpass QL script to run and a `bbox` parameter which is the bounding box to query within. The `query` method returns a list of `Element` objects which represent the results of the query.
+
+Alternatively a `File` object can be passed to the `query` method to read the Overpass QL script from a file.
 
 ```dart
-const like = 'sample';
+import 'package:osm_overpass/osm_overpass.dart';
+
+void main() async {
+  final overpass = Overpass();
+  final elements = await overpass.query(
+    scriptText: 'node[amenity=bar]({{bbox}});\nout;', 
+    bbox: (-27.460467537569297,153.03190097931952,-27.454260316536676,153.03804860238165)
+  );
+  
+  for (final element in elements!) {
+    print(element.toMap());
+  }
+}
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
