@@ -48,9 +48,7 @@ class Overpass {
   /// Returns a [Future] that resolves to a list of [Element] objects if the query is successful,
   /// or `null` if the query fails or no elements are found.
   Future<List<Element>?> query(
-      {required String script,
-      Bbox? bbox,
-      LatLng? center}) async {
+      {required String script, Bbox? bbox, LatLng? center}) async {
     script = script.buildQuery(bbox, center);
 
     final Map<String, String> queryMap = {
