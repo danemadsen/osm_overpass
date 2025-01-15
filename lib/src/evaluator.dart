@@ -45,6 +45,22 @@ abstract class Evaluator {
   AndEvaluator operator &(dynamic other) {
     return AndEvaluator(this, other);
   }
+
+  LessThanEvaluator operator <(dynamic other) {
+    return LessThanEvaluator(this, other);
+  }
+
+  LessThanOrEqualEvaluator operator <=(dynamic other) {
+    return LessThanOrEqualEvaluator(this, other);
+  }
+
+  GreaterThanEvaluator operator >(dynamic other) {
+    return GreaterThanEvaluator(this, other);
+  }
+
+  GreaterThanOrEqualEvaluator operator >=(dynamic other) {
+    return GreaterThanOrEqualEvaluator(this, other);
+  }
 }
 
 class DynamicEvaluator extends Evaluator {
