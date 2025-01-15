@@ -21,7 +21,7 @@ abstract class Evaluator {
       return evaluator.toString();
     }
     else if (evaluator is DateTime) {
-      return evaluator.toIso8601String();
+      return '"${evaluator.toIso8601String()}"';
     }
     else if (evaluator is String) {
       return '"$evaluator"';
@@ -156,5 +156,69 @@ class ParenthesesEvaluator extends Evaluator {
   @override
   String toQueryLanguage() {
     return '(${_getEvaluatorString(evaluator)})';
+  }
+}
+
+class LessThanEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  LessThanEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} < ${_getEvaluatorString(right)}';
+  }
+}
+
+class LessThanOrEqualEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  LessThanOrEqualEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} <= ${_getEvaluatorString(right)}';
+  }
+}
+
+class GreaterThanEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  GreaterThanEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} > ${_getEvaluatorString(right)}';
+  }
+}
+
+class GreaterThanOrEqualEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  GreaterThanOrEqualEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} >= ${_getEvaluatorString(right)}';
   }
 }
