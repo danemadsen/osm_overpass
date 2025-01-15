@@ -112,6 +112,38 @@ class AndEvaluator extends Evaluator {
   }
 }
 
+class EqualityEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  EqualityEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} == ${_getEvaluatorString(right)}';
+  }
+}
+
+class InequalityEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  InequalityEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} != ${_getEvaluatorString(right)}';
+  }
+}
+
 class ParenthesesEvaluator extends Evaluator {
   final dynamic evaluator;
 
