@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:latlong2/latlong.dart';
 import 'package:dio/dio.dart';
 
+import 'element.dart';
+
 typedef Bbox = (double, double, double, double);
 
 class Overpass {
@@ -79,11 +81,20 @@ class Overpass {
     return date.toIso8601String();
   }
 
-  void query({required File script, Bbox? bbox, LatLng? center}) {
+  Future<List<Element>?> query({required File script, Bbox? bbox, LatLng? center}) async {
     final String query = _buildQuery(script, bbox, center);
-    _dioClient.post(
+
+    final Response<Map<String, dynamic>> response = await _dioClient.post<Map<String, dynamic>>(
       'https://overpass-api.de/api/interpreter',
       data: query,
     );
+
+    final List<dynamic>? elements = response.data?['elements'];
+
+    if (elements == null) {
+      return null;
+    }
+
+    return Element.fromList(elements);
   }
 }
