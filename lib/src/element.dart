@@ -1,14 +1,22 @@
 import 'package:latlong2/latlong.dart';
 
 class Element {
-  int? id;
-  Map<String, String>? tags;
+  final int? id;
+  final Map<String, String>? tags;
 
   Element({this.id, this.tags});
 
-  Element.fromMap(Map<String, dynamic> map) {
-    id = map['id'];
-    tags = map['tags'];
+  factory Element.fromMap(Map<String, dynamic> map) {
+    switch (map['type']) {
+      case 'node':
+        return Node.fromMap(map);
+      case 'way':
+        return Way.fromMap(map);
+      case 'relation':
+        return Relation.fromMap(map);
+      default:
+        throw ArgumentError('Invalid element type');
+    }
   }
 
   Map<String, dynamic> toMap() {
@@ -27,12 +35,20 @@ class Element {
 }
 
 class Node extends Element {
-  LatLng? latLng;
+  final LatLng? latLng;
 
   Node({super.id, super.tags, this.latLng});
 
-  Node.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
-    latLng = LatLng(map['lat'], map['lon']);
+  factory Node.fromMap(Map<String, dynamic> map) {
+    final lat = map['lat'];
+    final lon = map['lon'];
+    final latLng = lat != null && lon != null ? LatLng(lat, lon) : null;
+
+    return Node(
+      id: map['id'],
+      tags: map['tags'],
+      latLng: latLng
+    );
   }
 
   @override
@@ -49,12 +65,16 @@ class Node extends Element {
 }
 
 class Way extends Element {
-  List<int>? nodes;
+  final List<int>? nodes;
 
   Way({super.id, super.tags, this.nodes});
 
-  Way.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
-    nodes = map['nodes'];
+  factory Way.fromMap(Map<String, dynamic> map) {
+    return Way(
+      id: map['id'],
+      tags: map['tags'],
+      nodes: map['nodes']
+    );
   }
 
   @override
@@ -70,12 +90,23 @@ class Way extends Element {
 }
 
 class Relation extends Element {
-  List<Member>? members;
+  final List<Member>? members;
 
   Relation({super.id, super.tags, this.members});
 
-  Relation.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
-    members = map['members'];
+  factory Relation.fromMap(Map<String, dynamic> map) {
+    final List<Member> members = [];
+    if (map['members'] != null) {
+      for (final member in map['members']) {
+        members.add(Member.fromMap(member));
+      }
+    }
+
+    return Relation(
+      id: map['id'],
+      tags: map['tags'],
+      members: members
+    );
   }
 
   @override
@@ -91,16 +122,18 @@ class Relation extends Element {
 }
 
 class Member {
-  String? type;
-  int? ref;
-  String? role;
+  final String? type;
+  final int? ref;
+  final String? role;
 
   Member({this.type, this.ref, this.role});
 
-  Member.fromMap(Map<String, dynamic> map) {
-    type = map['type'];
-    ref = map['ref'];
-    role = map['role'];
+  factory Member.fromMap(Map<String, dynamic> map) {
+    return Member(
+      type: map['type'],
+      ref: map['ref'],
+      role: map['role']
+    );
   }
 
   Map<String, dynamic> toMap() {
