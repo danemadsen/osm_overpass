@@ -61,6 +61,22 @@ abstract class Evaluator {
   GreaterThanOrEqualEvaluator operator >=(dynamic other) {
     return GreaterThanOrEqualEvaluator(this, other);
   }
+
+  PlusEvaluator operator +(dynamic other) {
+    return PlusEvaluator(this, other);
+  }
+
+  MinusEvaluator operator -(dynamic other) {
+    return MinusEvaluator(this, other);
+  }
+
+  MultiplyEvaluator operator *(dynamic other) {
+    return MultiplyEvaluator(this, other);
+  }
+
+  DivideEvaluator operator /(dynamic other) {
+    return DivideEvaluator(this, other);
+  }
 }
 
 class DynamicEvaluator extends Evaluator {
@@ -236,5 +252,86 @@ class GreaterThanOrEqualEvaluator extends Evaluator {
   @override
   String toQueryLanguage() {
     return '${_getEvaluatorString(left)} >= ${_getEvaluatorString(right)}';
+  }
+}
+
+class PlusEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  PlusEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} + ${_getEvaluatorString(right)}';
+  }
+}
+
+class MinusEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  MinusEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} - ${_getEvaluatorString(right)}';
+  }
+}
+
+class MultiplyEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  MultiplyEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} * ${_getEvaluatorString(right)}';
+  }
+}
+
+class DivideEvaluator extends Evaluator {
+  final dynamic left;
+  final dynamic right;
+
+  DivideEvaluator(this.left, this.right) {
+    if (!_validEvaluator(left) || !_validEvaluator(right)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(left)} / ${_getEvaluatorString(right)}';
+  }
+}
+
+class TernaryEvaluator extends Evaluator {
+  final dynamic condition;
+  final dynamic trueValue;
+  final dynamic falseValue;
+
+  TernaryEvaluator(this.condition, this.trueValue, this.falseValue) {
+    if (!_validEvaluator(condition) || !_validEvaluator(trueValue) || !_validEvaluator(falseValue)) {
+      throw ArgumentError('Invalid type for evaluator');
+    }
+  }
+
+  @override
+  String toQueryLanguage() {
+    return '${_getEvaluatorString(condition)} ? ${_getEvaluatorString(trueValue)} : ${_getEvaluatorString(falseValue)}';
   }
 }
