@@ -14,6 +14,8 @@ class Element {
         return Way.fromMap(map);
       case 'relation':
         return Relation.fromMap(map);
+      case 'area':
+        return Area.fromMap(map);
       default:
         throw ArgumentError('Invalid element type');
     }
@@ -118,6 +120,17 @@ class Relation extends Element {
     }
 
     return data;
+  }
+}
+
+class Area extends Element {
+  Area({super.id, super.tags});
+
+  factory Area.fromMap(Map<String, dynamic> map) {
+    return Area(
+      id: map['id'],
+      tags: map['tags']
+    );
   }
 }
 
