@@ -82,7 +82,9 @@ class Element {
 
     return data;
   }
+}
 
+extension Elements on List<Element> {
   /// Creates a list of `Element` objects from a list of dynamic objects.
   ///
   /// This method takes a list of dynamic objects, converts each object
@@ -98,6 +100,16 @@ class Element {
     }
 
     return elements;
+  }
+
+  List<LatLng> getWayPoints(Way way) {
+    final List<LatLng> wayPoints = [];
+    for (final id in way.nodes!) {
+      final node = firstWhere((element) => element.id == id) as Node;
+      wayPoints.add(node.latLng!);
+    }
+
+    return wayPoints;
   }
 }
 

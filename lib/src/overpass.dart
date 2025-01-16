@@ -75,6 +75,6 @@ class Overpass {
       return null;
     }
 
-    return Element.fromList(elements);
+    return Elements.fromList(elements);
   }
 }
