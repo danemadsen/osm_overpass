@@ -111,6 +111,8 @@ extension Elements on List<Element> {
 
     return wayPoints;
   }
+
+  List<Element> get withTags => where((element) => element.tags != null).toList();
 }
 
 /// A class representing a Node element in the OpenStreetMap (OSM) data model.
