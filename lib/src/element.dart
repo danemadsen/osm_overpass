@@ -84,6 +84,12 @@ class Element {
   }
 }
 
+/// Extension on `List<Element>` providing utility methods for working with
+/// collections of `Element` objects.
+///
+/// This extension includes methods for creating `Element` objects from a list
+/// of dynamic objects, retrieving waypoints from a `Way` object, and filtering
+/// elements with non-null tags.
 extension Elements on List<Element> {
   /// Creates a list of `Element` objects from a list of dynamic objects.
   ///
@@ -102,6 +108,15 @@ extension Elements on List<Element> {
     return elements;
   }
 
+  /// Retrieves the list of `LatLng` points for a given `Way`.
+  ///
+  /// This method iterates through the node IDs in the provided `Way` object,
+  /// finds the corresponding `Node` objects, and extracts their `LatLng`
+  /// coordinates to form a list of waypoints.
+  ///
+  /// - Parameter way: The `Way` object containing the node IDs.
+  /// - Returns: A list of `LatLng` points representing the waypoints of the `Way`.
+  /// - Throws: An exception if a node ID in the `Way` cannot be found in the list of elements.
   List<LatLng> getWayPoints(Way way) {
     final List<LatLng> wayPoints = [];
     for (final id in way.nodes!) {
@@ -112,6 +127,15 @@ extension Elements on List<Element> {
     return wayPoints;
   }
 
+  /// Returns a list of elements that have non-null tags.
+  /// 
+  /// This getter filters the elements and includes only those
+  /// that have their `tags` property set to a non-null value.
+  /// 
+  /// Example:
+  /// ```dart
+  /// List<Element> elementsWithTags = elements.withTags;
+  /// ```
   List<Element> get withTags => where((element) => element.tags != null).toList();
 }
 
