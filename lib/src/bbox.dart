@@ -1,5 +1,5 @@
 /// A type alias for a tuple representing a bounding box (Bbox).
-/// 
+///
 /// The bounding box is defined by four `double` values:
 /// - The minimum latitude.
 /// - The minimum longitude.
@@ -8,7 +8,7 @@
 typedef Bbox = (double, double, double, double);
 
 /// An extension on the `Bbox` type to provide utility methods.
-/// 
+///
 /// The extension provides methods to calculate the union, difference, and intersection
 /// of two bounding boxes.
 extension BboxExtension on Bbox {
@@ -49,7 +49,10 @@ extension BboxExtension on Bbox {
     final List<Bbox> result = [];
 
     // Check if there's no overlap
-    if (this.$1 >= other.$3 || this.$3 <= other.$1 || this.$2 >= other.$4 || this.$4 <= other.$2) {
+    if (this.$1 >= other.$3 ||
+        this.$3 <= other.$1 ||
+        this.$2 >= other.$4 ||
+        this.$4 <= other.$2) {
       // No overlap, return the original bbox
       return [this];
     }
@@ -66,12 +69,22 @@ extension BboxExtension on Bbox {
 
     // Left region
     if (this.$1 < other.$1) {
-      result.add((this.$1, other.$2.clamp(this.$2, this.$4), other.$1, other.$4.clamp(this.$2, this.$4)));
+      result.add((
+        this.$1,
+        other.$2.clamp(this.$2, this.$4),
+        other.$1,
+        other.$4.clamp(this.$2, this.$4)
+      ));
     }
 
     // Right region
     if (this.$3 > other.$3) {
-      result.add((other.$3, other.$2.clamp(this.$2, this.$4), this.$3, other.$4.clamp(this.$2, this.$4)));
+      result.add((
+        other.$3,
+        other.$2.clamp(this.$2, this.$4),
+        this.$3,
+        other.$4.clamp(this.$2, this.$4)
+      ));
     }
 
     return result;
@@ -89,7 +102,10 @@ extension BboxExtension on Bbox {
   /// - Returns: A new `Bbox` representing the intersection of the two bounding
   ///   boxes, or `null` if there is no intersection.
   Bbox? intersection(Bbox other) {
-    if (this.$1 >= other.$3 || this.$3 <= other.$1 || this.$2 >= other.$4 || this.$4 <= other.$2) {
+    if (this.$1 >= other.$3 ||
+        this.$3 <= other.$1 ||
+        this.$2 >= other.$4 ||
+        this.$4 <= other.$2) {
       return null;
     }
 

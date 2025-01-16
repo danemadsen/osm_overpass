@@ -128,15 +128,16 @@ extension Elements on List<Element> {
   }
 
   /// Returns a list of elements that have non-null tags.
-  /// 
+  ///
   /// This getter filters the elements and includes only those
   /// that have their `tags` property set to a non-null value.
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// List<Element> elementsWithTags = elements.withTags;
   /// ```
-  List<Element> get withTags => where((element) => element.tags != null).toList();
+  List<Element> get withTags =>
+      where((element) => element.tags != null).toList();
 }
 
 /// A class representing a Node element in the OpenStreetMap (OSM) data model.
