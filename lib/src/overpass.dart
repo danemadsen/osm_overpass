@@ -1,6 +1,7 @@
 import 'package:latlong2/latlong.dart';
 import 'package:dio/dio.dart';
 
+import 'bbox.dart';
 import 'query_builder.dart';
 import 'element.dart';
 

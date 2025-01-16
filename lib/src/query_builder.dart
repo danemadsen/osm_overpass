@@ -1,6 +1,6 @@
 import 'package:latlong2/latlong.dart';
 
-typedef Bbox = (double, double, double, double);
+import 'bbox.dart';
 
 extension QueryBuilder on String {
   String buildQuery(Bbox? bbox, LatLng? center) {
