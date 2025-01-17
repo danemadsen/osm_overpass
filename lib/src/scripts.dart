@@ -111,7 +111,7 @@ class OverpassScripts {
 
   /// A map containing script names as keys and their corresponding script
   /// content as values. The available scripts are:
-  /// 
+  ///
   /// - 'nightlife': Script related to nightlife activities.
   /// - 'food': Script related to food establishments.
   /// - 'military': Script related to military locations.
