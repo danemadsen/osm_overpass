@@ -31,4 +31,15 @@ class OverpassScripts {
     >;
     out skel qt;
   ''';
+
+  static const String parking = '''
+    [out:json];
+    (
+      way[amenity=parking]({{bbox}});
+      way[amenity=parking_space]({{bbox}});
+    );
+    out body;
+    >;
+    out skel qt;
+  ''';
 }
