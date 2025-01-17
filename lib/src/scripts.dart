@@ -42,4 +42,12 @@ class OverpassScripts {
     >;
     out skel qt;
   ''';
+
+  static const String police = '''
+    [out:json];
+    (
+      node[amenity=police]({{bbox}});
+    );
+    out;
+  ''';
 }
