@@ -14,3 +14,7 @@
 ## 0.0.4
 
 * Add common scripts
+
+## 0.0.5
+
+* Fix error with output

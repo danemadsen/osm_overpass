@@ -1,10 +1,10 @@
 /// A type alias for a tuple representing a bounding box (Bbox).
 ///
 /// The bounding box is defined by four `double` values:
-/// - The minimum latitude.
-/// - The minimum longitude.
-/// - The maximum latitude.
-/// - The maximum longitude.
+/// - The minimum latitude (south).
+/// - The minimum longitude (west).
+/// - The maximum latitude (north).
+/// - The maximum longitude (east).
 typedef Bbox = (double, double, double, double);
 
 /// An extension on the `Bbox` type to provide utility methods.

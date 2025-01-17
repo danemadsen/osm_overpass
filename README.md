@@ -8,7 +8,7 @@ To get started add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  osm_overpass: ^0.0.4
+  osm_overpass: ^0.0.5
 ```
 
 Then you can import the package in your Dart code:

@@ -1,6 +1,6 @@
 name: osm_overpass
 description: A dio compatible dart package to query the OpenStreetMap Overpass API. 
-version: 0.0.4
+version: 0.0.5
 repository: https://github.com/danemadsen/osm_overpass
 
 environment:

@@ -269,7 +269,8 @@ class Way extends Element {
   ///
   /// Returns a `Way` object initialized with the values from the map.
   factory Way.fromMap(Map<String, dynamic> map) {
-    return Way(id: map['id'], tags: map['tags'], nodes: map['nodes']);
+    return Way(
+        id: map['id'], tags: map['tags'], nodes: map['nodes'].cast<int>());
   }
 
   /// Converts the current object to a map representation.
