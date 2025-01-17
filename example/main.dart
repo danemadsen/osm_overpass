@@ -3,7 +3,7 @@ import 'package:osm_overpass/osm_overpass.dart';
 void main() async {
   final overpass = Overpass();
   final elements = await overpass.query(
-      script: 'node[amenity=bar]({{bbox}});\nout;',
+      script: OverpassScripts.nightlife,
       bbox: (
         -27.460467537569297,
         153.03190097931952,

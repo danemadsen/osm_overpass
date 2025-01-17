@@ -10,3 +10,7 @@
 
 * Add utility methods to `Element` class
 * Expose `Bbox` type and add utility methods
+
+## 0.0.4
+
+* Add common scripts
