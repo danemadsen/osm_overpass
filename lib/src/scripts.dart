@@ -9,4 +9,14 @@ class OverpassScripts {
     );
     out;
   ''';
+
+  static const String food = '''
+    [out:json];
+    (
+      node[amenity=restaurant]({{bbox}});
+      node[amenity=cafe]({{bbox}});
+      node[amenity=fast_food]({{bbox}});
+    );
+    out;
+  ''';
 }
