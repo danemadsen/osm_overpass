@@ -50,4 +50,12 @@ class OverpassScripts {
     );
     out;
   ''';
+
+  static const Map<String, String> values = {
+    'nightlife': nightlife,
+    'food': food,
+    'military': military,
+    'parking': parking,
+    'police': police,
+  };
 }
