@@ -19,4 +19,16 @@ class OverpassScripts {
     );
     out;
   ''';
+
+  static const String military = '''
+    [out:json];
+    (
+      node[military]({{bbox}});
+      way[military]({{bbox}});
+      relation[military]({{bbox}});
+    );
+    out body;
+    >;
+    out skel qt;
+  ''';
 }
