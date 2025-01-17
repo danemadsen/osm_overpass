@@ -51,7 +51,7 @@ class OverpassScripts {
     out;
   ''';
 
-  static const Map<String, String> values = {
+  static const Map<String, String> scripts = {
     'nightlife': nightlife,
     'food': food,
     'military': military,
